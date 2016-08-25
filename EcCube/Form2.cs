@@ -297,7 +297,7 @@ namespace EcCube
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn003")
                     {
-                        // メガネはMiniの中に入れる
+                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
                     }
                     else
                     {

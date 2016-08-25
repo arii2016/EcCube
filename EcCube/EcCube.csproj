@@ -37,13 +37,11 @@
     <ApplicationIcon>ec_ico10.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="iTextAsian-1.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\iTextAsian-1.0.dll</HintPath>
+    <Reference Include="iTextAsian-1.0">
+      <HintPath>.\iTextAsian-1.0.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=3.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp">
+      <HintPath>.\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
