@@ -41,8 +41,8 @@ namespace EcCube
         List<string[]> m_listReadData = new List<string[]>();
         // 注文データーリスト
         List<CEcCubeData> m_listOrderData = new List<CEcCubeData>();
-        // ヤマト出力ファイル名
-        string m_YamatoFileName;
+        // ゆうプリR出力ファイル名
+        string m_YpprFileName;
         // Openlogi出力ファイル名
         string m_OpenlogiFileName;
 
@@ -81,8 +81,8 @@ namespace EcCube
             // 注文データー作成
             MakeOrderData();
 
-            // ヤマト出力ファイル名
-            m_YamatoFileName = Path.GetDirectoryName(strFileName) + "\\" + "ヤマト.csv";
+            // ゆうプリRファイル名
+            m_YpprFileName = Path.GetDirectoryName(strFileName) + "\\" + "ゆうプリR.csv";
             m_OpenlogiFileName = Path.GetDirectoryName(strFileName) + "\\" + "OpenLogi.csv";
 
             m_ListProductFileName = Path.GetDirectoryName(strFileName) + "\\" + "今日の出荷.csv";
@@ -299,6 +299,9 @@ namespace EcCube
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
                     }
+                    else if (clsEcCubeData.listProductCode[i] == "mcn020")
+                    {
+                    }
                     else
                     {
                         // 小物は一つの箱にまとめる
@@ -318,10 +321,6 @@ namespace EcCube
                 if (clsEcCubeData.strPaymentMethod == "代金引換")
                 {
                     clsEcCubeData.enInvoiceClass = EnumInvoiceClass.CASH_ON_DELIVERY;
-                }
-                else if (clsEcCubeData.iTotalBoxNum >= 3)
-                {
-                    clsEcCubeData.enInvoiceClass = EnumInvoiceClass.YAMATO_POST;
                 }
                 else
                 {
@@ -455,11 +454,6 @@ namespace EcCube
             {
                 return true;
             }
-            // ヤマト便
-            if (ConvertYamatoPost() == false)
-            {
-                return true;
-            }
             // オープンロジ
             if (ConvertOpenlogi() == false)
             {
@@ -471,30 +465,95 @@ namespace EcCube
         //--------------------------------------------------------------
         public bool ConvertDelivery()
         {
-
             for (int i = 0; i < m_listOrderData.Count; i++)
             {
-                if (m_listOrderData[i].bEnable == false || m_listOrderData[i].enInvoiceClass == EnumInvoiceClass.YAMATO_POST)
+                if (m_listOrderData[i].bEnable == false)
                 {
                     continue;
                 }
 
-                // ヤマトデーター
-                string[] strYamatoData = new string[(int)EnumYamatoItem.MAX];
+                // ゆうプリR
+                string[] strYpprData = new string[(int)EnumYpprItem.MAX];
 
                 // お客様側管理番号
-                strYamatoData[(int)EnumYamatoItem.USER_ID] = "3" + m_listOrderData[i].strOrderId;
-                // 送り状種別
+                strYpprData[(int)EnumYpprItem.USER_ID] = "";
+                // 発送予定日
+                strYpprData[(int)EnumYpprItem.SHIPPING_SCHEDULE_DATE] = DateTime.Now.ToString("yyyyMMdd");
+                // 発送予定時間
+                strYpprData[(int)EnumYpprItem.SHIPPING_SCHEDULE_TIME] = "02";
+                // 郵便種別
+                strYpprData[(int)EnumYpprItem.POST_CLASS] = "0";
+                // 支払元
                 if (m_listOrderData[i].strPaymentMethod == "代金引換")
                 {
-                    strYamatoData[(int)EnumYamatoItem.INVOICE_CLASS] = "2";
+                    strYpprData[(int)EnumYpprItem.PAYMENT_SOURCE] = "2";
                 }
                 else
                 {
-                    strYamatoData[(int)EnumYamatoItem.INVOICE_CLASS] = "0";
+                    strYpprData[(int)EnumYpprItem.PAYMENT_SOURCE] = "0";
                 }
-                // 発送予定日
-                strYamatoData[(int)EnumYamatoItem.SHIPPING_SCHEDULE_TIME] = DateTime.Now.ToString("yyyy/MM/dd");
+                // 送り状種別
+                if (m_listOrderData[i].strPaymentMethod == "代金引換")
+                {
+                    strYpprData[(int)EnumYpprItem.INVOICE_CLASS] = "1100783003";
+                }
+                else
+                {
+                    strYpprData[(int)EnumYpprItem.INVOICE_CLASS] = "1100783001";
+                }
+                // お届け先郵便番号
+                strYpprData[(int)EnumYpprItem.TRANSPORT_POST_NO] = m_listOrderData[i].strPostNo;
+                // お届け先住所
+                strYpprData[(int)EnumYpprItem.TRANSPORT_ADDRESS_1] = m_listOrderData[i].strAddress1;
+                strYpprData[(int)EnumYpprItem.TRANSPORT_ADDRESS_2] = m_listOrderData[i].strAddress2;
+                strYpprData[(int)EnumYpprItem.TRANSPORT_ADDRESS_3] = m_listOrderData[i].strAddress3;
+
+                if (m_listOrderData[i].strCompanyName == "")
+                {
+                    // お届け先名称1
+                    strYpprData[(int)EnumYpprItem.TRANSPORT_NAME_1] = m_listOrderData[i].strName;
+                    // お届け先名称2
+                    strYpprData[(int)EnumYpprItem.TRANSPORT_NAME_2] = "";
+                }
+                else
+                {
+                    // お届け先名称1
+                    strYpprData[(int)EnumYpprItem.TRANSPORT_NAME_1] = m_listOrderData[i].strCompanyName;
+                    // お届け先名称2
+                    strYpprData[(int)EnumYpprItem.TRANSPORT_NAME_2] = m_listOrderData[i].strName;
+                }
+                // お届け先敬称
+                strYpprData[(int)EnumYpprItem.TRANSPORT_TITLE] = "0";
+                // お届け先電話番号
+                strYpprData[(int)EnumYpprItem.TRANSPORT_TEL] = m_listOrderData[i].strPhoneNo;
+                // お届け先メール
+                strYpprData[(int)EnumYpprItem.TRANSPORT_MAIL] = m_listOrderData[i].strEMail;
+                // 発送元郵便番号
+                strYpprData[(int)EnumYpprItem.ORIGIN_POST_NO] = "4000306";
+                // 発送元住所1
+                strYpprData[(int)EnumYpprItem.ORIGIN_ADDRESS_1] = "山梨県";
+                // 発送元住所2
+                strYpprData[(int)EnumYpprItem.ORIGIN_ADDRESS_2] = "南アルプス市小笠原";
+                // 発送元住所3
+                strYpprData[(int)EnumYpprItem.ORIGIN_ADDRESS_3] = "1589-1";
+                // 発送元名称1
+                strYpprData[(int)EnumYpprItem.ORIGIN_NAME_1] = "smartDIYs";
+                // 発送元名称2
+                strYpprData[(int)EnumYpprItem.ORIGIN_NAME_2] = "";
+                // 発送元敬称
+                strYpprData[(int)EnumYpprItem.ORIGIN_TITLE] = "0";
+                // 発送元電話番号
+                strYpprData[(int)EnumYpprItem.ORIGIN_TEL] = "05037867989";
+                // 発送元メール
+                strYpprData[(int)EnumYpprItem.ORIGIN_MAIL] = "support@smartdiys.com";
+                // こわれもの
+                strYpprData[(int)EnumYpprItem.BREAKABLE_FLG] = "1";
+                // 逆さま厳禁
+                strYpprData[(int)EnumYpprItem.WAY_UP_FLG] = "1";
+                // 下積み厳禁
+                strYpprData[(int)EnumYpprItem.DO_NOT_STACK_FLG] = "1";
+                // 厚さ
+                strYpprData[(int)EnumYpprItem.THICKNESS] = "";
                 // お届け日
                 if (m_listOrderData[i].strDeliberyDate != "")
                 {
@@ -510,275 +569,109 @@ namespace EcCube
 
                     if (timeDelibery.CompareTo(timeNow) > 0)
                     {
-                        strYamatoData[(int)EnumYamatoItem.DELIBERY_DATE] = m_listOrderData[i].strDeliberyDate.Substring(0, 4) +
-                                                                       "/" +
-                                                                       m_listOrderData[i].strDeliberyDate.Substring(5, 2) +
-                                                                       "/" +
-                                                                       m_listOrderData[i].strDeliberyDate.Substring(8, 2);
+                        strYpprData[(int)EnumYpprItem.DELIBERY_DATE] = m_listOrderData[i].strDeliberyDate.Replace("/", "");
                     }
                     else
                     {
-                        strYamatoData[(int)EnumYamatoItem.DELIBERY_DATE] = "";
+                        strYpprData[(int)EnumYpprItem.DELIBERY_DATE] = "";
                     }
-
                 }
                 else
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_DATE] = "";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_DATE] = "";
                 }
                 // お届け時間
                 if (m_listOrderData[i].strDeliberyTime == "午前中")
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_TIME] = "0812";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "51";
                 }
                 else if (m_listOrderData[i].strDeliberyTime == "12～14")
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_TIME] = "1214";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "52";
                 }
                 else if (m_listOrderData[i].strDeliberyTime == "14～16")
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_TIME] = "1416";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "53";
                 }
                 else if (m_listOrderData[i].strDeliberyTime == "16～18")
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_TIME] = "1618";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "54";
                 }
                 else if (m_listOrderData[i].strDeliberyTime == "18～20")
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_TIME] = "1820";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "55";
                 }
                 else
                 {
-                    strYamatoData[(int)EnumYamatoItem.DELIBERY_TIME] = "";
+                    strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "00";
                 }
-                // お届け先電話番号
-                strYamatoData[(int)EnumYamatoItem.TRANSPORT_TEL] = m_listOrderData[i].strPhoneNo;
-                // お届け先郵便番号
-                strYamatoData[(int)EnumYamatoItem.TRANSPORT_POST_NO] = m_listOrderData[i].strPostNo;
-                // お届け先住所
-                int iPos;
-
-                iPos = m_listOrderData[i].strAddress3.IndexOf(" ");
-                if (iPos <= 0)
-                {
-                    iPos = m_listOrderData[i].strAddress3.IndexOf("　");
-                    if (iPos <= 0)
-                    {
-                        strYamatoData[(int)EnumYamatoItem.TRANSPORT_ADDRESS_1] = m_listOrderData[i].strAddress1 + m_listOrderData[i].strAddress2 + m_listOrderData[i].strAddress3;
-                        strYamatoData[(int)EnumYamatoItem.TRANSPORT_ADDRESS_2] = "";
-                    }
-                    else
-                    {
-                        strYamatoData[(int)EnumYamatoItem.TRANSPORT_ADDRESS_1] = m_listOrderData[i].strAddress1 + m_listOrderData[i].strAddress2 + m_listOrderData[i].strAddress3.Substring(0, iPos);
-                        strYamatoData[(int)EnumYamatoItem.TRANSPORT_ADDRESS_2] = m_listOrderData[i].strAddress3.Substring(iPos + 1, m_listOrderData[i].strAddress3.Length - (iPos + 1));
-                    }
-                }
-                else
-                {
-                    strYamatoData[(int)EnumYamatoItem.TRANSPORT_ADDRESS_1] = m_listOrderData[i].strAddress1 + m_listOrderData[i].strAddress2 + m_listOrderData[i].strAddress3.Substring(0, iPos);
-                    strYamatoData[(int)EnumYamatoItem.TRANSPORT_ADDRESS_2] = m_listOrderData[i].strAddress3.Substring(iPos + 1, m_listOrderData[i].strAddress3.Length - (iPos + 1));
-                }
-
-                // お届け先会社・部門名1
-                strYamatoData[(int)EnumYamatoItem.TRANSPORT_COMPANY_1] = m_listOrderData[i].strCompanyName;
-                // お届け先会社・部門名2
-                strYamatoData[(int)EnumYamatoItem.TRANSPORT_COMPANY_2] = "";
-                // お届け先名
-                strYamatoData[(int)EnumYamatoItem.TRANSPORT_NAME] = m_listOrderData[i].strName;
-                // お届け先敬称
-                strYamatoData[(int)EnumYamatoItem.TRANSPORT_TITLE] = "様";
-                // ご依頼主コード
-                strYamatoData[(int)EnumYamatoItem.ORIGIN_CODE] = "";
-                // ご依頼主電話番号
-                strYamatoData[(int)EnumYamatoItem.ORIGIN_TEL] = "050-3786-7989";
-                // ご依頼主郵便番号
-                strYamatoData[(int)EnumYamatoItem.ORIGIN_POST_NO] = "4000306";
-                // ご依頼主住所1
-                strYamatoData[(int)EnumYamatoItem.ORIGIN_ADDRESS_1] = "山梨県南アルプス市小笠原1589-1";
-                // ご依頼主住所2
-                strYamatoData[(int)EnumYamatoItem.ORIGIN_ADDRESS_2] = "";
-                // ご依頼主名
-                strYamatoData[(int)EnumYamatoItem.ORIGIN_NAME] = "smartDIYs Shop";
-                // 品名コード1
-                strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_CODE_1] = "";
-                // 品名1
-                strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_1] = m_listOrderData[i].listProductName[0];
-                if (strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_1].Length > 25)
-                {
-                    strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_1] = strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_1].Substring(0, 25);
-                }
-                // 品名コード2
-                strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_CODE_2] = "";
-                // 品名2
-                strYamatoData[(int)EnumYamatoItem.PRODUCT_NAME_2] = "";
-                // 荷扱い1
-                strYamatoData[(int)EnumYamatoItem.FREIGHT_HANDLING_1] = "精密機器";
-                // 荷扱い2
-                strYamatoData[(int)EnumYamatoItem.FREIGHT_HANDLING_2] = "下積厳禁";
-                // 記事
-                strYamatoData[(int)EnumYamatoItem.ARTICLE] = "";
+                // 発行枚数
+                strYpprData[(int)EnumYpprItem.POST_NUM] = m_listOrderData[i].iTotalBoxNum.ToString();
+                // フリー項目
+                strYpprData[(int)EnumYpprItem.FREE_ITEM] = "3" + m_listOrderData[i].strOrderId;
                 // 代引金額
                 if (m_listOrderData[i].strPaymentMethod == "代金引換")
                 {
-                    strYamatoData[(int)EnumYamatoItem.COD_PAY] = m_listOrderData[i].strTotalPay;
+                    strYpprData[(int)EnumYpprItem.COD_PAY] = m_listOrderData[i].strTotalPay;
                 }
                 else
                 {
-                    strYamatoData[(int)EnumYamatoItem.COD_PAY] = "";
+                    strYpprData[(int)EnumYpprItem.COD_PAY] = "";
                 }
                 // 代引消費税
-                strYamatoData[(int)EnumYamatoItem.COD_TAX] = "";
-                // 発行枚数
-                strYamatoData[(int)EnumYamatoItem.POST_NUM] = m_listOrderData[i].iTotalBoxNum.ToString();
-                // 個数口枠の印字
-                strYamatoData[(int)EnumYamatoItem.NUMBER_FRAME] = "3";
-                // ご請求先顧客コード
-                strYamatoData[(int)EnumYamatoItem.BILLING_CODE] = "05037867989";
-                // 運賃管理番号
-                strYamatoData[(int)EnumYamatoItem.FARE_NO] = "01";
-                // 空白
-                strYamatoData[(int)EnumYamatoItem.NULL_1] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_2] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_3] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_4] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_5] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_6] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_7] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_8] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_9] = "";
-                strYamatoData[(int)EnumYamatoItem.NULL_10] = "";
+                strYpprData[(int)EnumYpprItem.COD_TAX] = "";
+                // 商品名設定
+                strYpprData[(int)EnumYpprItem.PRODUCT_NAME] = m_listOrderData[i].listProductName[0];
+                if (strYpprData[(int)EnumYpprItem.PRODUCT_NAME].Length > 25)
+                {
+                    strYpprData[(int)EnumYpprItem.PRODUCT_NAME] = strYpprData[(int)EnumYpprItem.PRODUCT_NAME].Substring(0, 25);
+                }
+
 
                 // CSVへ書き込む
-                bool bHeaderFlg = false;
-
-                // ファイルが存在しない場合には、ヘッダーを追加
-                if (System.IO.File.Exists(m_YamatoFileName) == false)
-                {
-                    bHeaderFlg = true;
-                }
 
                 StreamWriter clsSw;
                 try
                 {
-                    clsSw = new StreamWriter(m_YamatoFileName, true, Encoding.GetEncoding("Shift_JIS"));
+                    clsSw = new StreamWriter(m_YpprFileName, true, Encoding.GetEncoding("Shift_JIS"));
                 }
                 catch
                 {
                     return false;
                 }
-                // ヘッダー書き込み
-                if (bHeaderFlg)
-                {
-                    clsSw.Write("ヤマト運輸データ\n");
-                }
                 // 代引きで複数箱の場合はコレクトと発払いに分ける
                 if (m_listOrderData[i].strPaymentMethod == "代金引換" && m_listOrderData[i].iTotalBoxNum > 1)
                 {
                     // コレクト
-                    strYamatoData[(int)EnumYamatoItem.POST_NUM] = "1";
-                    for (int j = 0; j < (int)EnumYamatoItem.MAX; j++)
+                    strYpprData[(int)EnumYpprItem.POST_NUM] = "1";
+                    for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
                     {
-                        clsSw.Write("{0},", strYamatoData[j]);
+                        clsSw.Write("{0},", strYpprData[j]);
                     }
                     clsSw.Write("\n");
-                
+
                     // 発払い                
-                    strYamatoData[(int)EnumYamatoItem.POST_NUM] = (m_listOrderData[i].iTotalBoxNum - 1).ToString();
-                    strYamatoData[(int)EnumYamatoItem.COD_PAY] = "";
-                    strYamatoData[(int)EnumYamatoItem.INVOICE_CLASS] = "0";
-                    for (int j = 0; j < (int)EnumYamatoItem.MAX; j++)
+                    strYpprData[(int)EnumYpprItem.POST_NUM] = (m_listOrderData[i].iTotalBoxNum - 1).ToString();
+                    strYpprData[(int)EnumYpprItem.COD_PAY] = "";
+                    strYpprData[(int)EnumYpprItem.PAYMENT_SOURCE] = "0";
+                    strYpprData[(int)EnumYpprItem.INVOICE_CLASS] = "1100783001";
+                    for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
                     {
-                        clsSw.Write("{0},", strYamatoData[j]);
+                        clsSw.Write("{0},", strYpprData[j]);
                     }
                     clsSw.Write("\n");
                 }
                 else
                 {
-                    for (int j = 0; j < (int)EnumYamatoItem.MAX; j++)
+                    for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
                     {
-                        clsSw.Write("{0},", strYamatoData[j]);
+                        clsSw.Write("{0},", strYpprData[j]);
                     }
                     clsSw.Write("\n");
                 }
 
                 clsSw.Flush();
                 clsSw.Close();
-            }
-
-            return true;
-        }
-        //--------------------------------------------------------------
-        public bool ConvertYamatoPost()
-        {
-            //ドキュメントを作成
-            const string strPdfFileName = "LabelPrintTemp.pdf";
-            Document doc = new Document(PageSize.A4, 10f, 10f, 25f, 0);
-            bool bPDFShowFlg = false;
-
-            try
-            {
-                //ファイルの出力先を設定
-                PdfWriter.GetInstance(doc, new FileStream(strPdfFileName, FileMode.Create));
-                //ドキュメントを開く
-                doc.Open();
-
-
-                for (int i = 0; i < m_listOrderData.Count; i++)
-                {
-                    if (m_listOrderData[i].bEnable == false || m_listOrderData[i].enInvoiceClass != EnumInvoiceClass.YAMATO_POST)
-                    {
-                        continue;
-                    }
-                    if (bPDFShowFlg)
-                    {
-                        // 改ページ
-                        doc.NewPage();
-                    }
-
-                    bPDFShowFlg = true;
-
-                    float[] headerwodth = new float[] { 1f, 1f };
-                    PdfPTable tbl = new PdfPTable(headerwodth);
-                    tbl.WidthPercentage = 100;
-
-                    int iOutCnt = 0;
-                    
-                    for (int j = 0; j < m_listOrderData[i].iTotalBoxNum; j++)
-                    {
-                        if (MakeLabelPrint(tbl, m_listOrderData[i], j + 1) == false)
-                        {
-                            return false;
-                        }
-                        iOutCnt++;
-                    }
-
-                    // 空白を埋める
-                    for (int j = 0; j < headerwodth.Length - (iOutCnt % headerwodth.Length); j++)
-                    {
-                        SpaceLabelPrint(tbl);
-                    }
-
-                    // テーブル追加
-                    doc.Add(tbl);
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                if (bPDFShowFlg)
-                {
-                    //ドキュメントを閉じる
-                    doc.Close();
-                }
-            }
-
-            if (bPDFShowFlg)
-            {
-                // PDFを開く
-                System.Diagnostics.Process.Start(strPdfFileName);
             }
 
             return true;
@@ -919,45 +812,6 @@ namespace EcCube
                     clsSw.Close();
                 }
             }
-
-            return true;
-        }
-        //--------------------------------------------------------------
-        /// <summary>
-        /// ラベル空白設定
-        /// </summary>
-        public bool SpaceLabelPrint(PdfPTable tbl)
-        {
-            Font fnt;
-            PdfPCell cel;
-
-            fnt = new Font(BaseFont.CreateFont(@"c:\windows\fonts\msgothic.ttc,1", BaseFont.IDENTITY_H, true), 22);
-            cel = new PdfPCell(new Phrase("", fnt));
-            cel.HorizontalAlignment = Element.ALIGN_LEFT;
-            cel.FixedHeight = 199f;
-            cel.Padding = 7;
-            cel.Border = 0;
-            tbl.AddCell(cel);
-
-            return true;
-        }
-        //--------------------------------------------------------------
-        /// <summary>
-        /// ラベル作成
-        /// </summary>
-        public bool MakeLabelPrint(PdfPTable tbl, CEcCubeData clsEcCubeData, int iPos)
-        {
-            Font fnt;
-            PdfPCell cel;
-            string strBuf = iPos.ToString() + "/" + clsEcCubeData.iTotalBoxNum.ToString() + "\n〒" + clsEcCubeData.strPostNo + "\n" + clsEcCubeData.strAddress1 + clsEcCubeData.strAddress2 + clsEcCubeData.strAddress3 + "\n" + clsEcCubeData.strCompanyName + " " + clsEcCubeData.strName + "様" + "\n" + "TEL：" + clsEcCubeData.strPhoneNo;
-
-            fnt = new Font(BaseFont.CreateFont(@"c:\windows\fonts\msgothic.ttc,1", BaseFont.IDENTITY_H, true), 22);
-            cel = new PdfPCell(new Phrase(strBuf, fnt));
-            cel.HorizontalAlignment = Element.ALIGN_LEFT;
-            cel.FixedHeight = 199f;
-            cel.Padding = 7;
-            cel.Border = 0;
-            tbl.AddCell(cel);
 
             return true;
         }

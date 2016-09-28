@@ -16,8 +16,6 @@ namespace EcCube
         DELIVERY = 0,
         /// <summary>代引き</summary>
         CASH_ON_DELIVERY,
-        /// <summary>ヤマト便</summary>
-        YAMATO_POST,
 
         MAX
     }
@@ -72,94 +70,80 @@ namespace EcCube
         MAX
     }
     /// <summary>
-    /// ヤマト要素
+    /// ゆうプリR要素
     /// </summary>
-    public enum EnumYamatoItem
+    public enum EnumYpprItem
     {
         /// <summary>お客様側管理番号</summary>
         USER_ID = 0,
-        /// <summary>送り状種別</summary>
-        INVOICE_CLASS,
-        /// <summary>NULL</summary>
-        NULL_1,
-        /// <summary>NULL</summary>
-        NULL_2,
+        /// <summary>発送予定日</summary>
+        SHIPPING_SCHEDULE_DATE,
         /// <summary>発送予定時間</summary>
         SHIPPING_SCHEDULE_TIME,
-        /// <summary>配達指定日</summary>
-        DELIBERY_DATE,
-        /// <summary>配達時間帯区分</summary>
-        DELIBERY_TIME,
-        /// <summary>NULL</summary>
-        NULL_3,
-        /// <summary>お届け先電話番号</summary>
-        TRANSPORT_TEL,
-        /// <summary>NULL</summary>
-        NULL_4,
+        /// <summary>郵便種別</summary>
+        POST_CLASS,
+        /// <summary>支払元</summary>
+        PAYMENT_SOURCE,
+        /// <summary>送り状種別</summary>
+        INVOICE_CLASS,
         /// <summary>お届け先郵便番号</summary>
         TRANSPORT_POST_NO,
         /// <summary>お届け先住所1</summary>
         TRANSPORT_ADDRESS_1,
         /// <summary>お届け先住所2</summary>
         TRANSPORT_ADDRESS_2,
-        /// <summary>お届け先会社・部門名1</summary>
-        TRANSPORT_COMPANY_1,
-        /// <summary>お届け先会社・部門名2</summary>
-        TRANSPORT_COMPANY_2,
-        /// <summary>お届け先名</summary>
-        TRANSPORT_NAME,
-        /// <summary>NULL</summary>
-        NULL_5,
+        /// <summary>お届け先住所3</summary>
+        TRANSPORT_ADDRESS_3,
+        /// <summary>お届け先名称1</summary>
+        TRANSPORT_NAME_1,
+        /// <summary>お届け先名称2</summary>
+        TRANSPORT_NAME_2,
         /// <summary>お届け先敬称</summary>
         TRANSPORT_TITLE,
-        /// <summary>ご依頼主コード</summary>
-        ORIGIN_CODE,
-        /// <summary>ご依頼主電話番号</summary>
-        ORIGIN_TEL,
-        /// <summary>NULL</summary>
-        NULL_6,
-        /// <summary>ご依頼主郵便番号</summary>
+        /// <summary>お届け先電話番号</summary>
+        TRANSPORT_TEL,
+        /// <summary>お届け先メール</summary>
+        TRANSPORT_MAIL,
+        /// <summary>発送元郵便番号</summary>
         ORIGIN_POST_NO,
-        /// <summary>ご依頼主住所1</summary>
+        /// <summary>発送元住所1</summary>
         ORIGIN_ADDRESS_1,
-        /// <summary>ご依頼主住所2</summary>
+        /// <summary>発送元住所2</summary>
         ORIGIN_ADDRESS_2,
-        /// <summary>ご依頼主名</summary>
-        ORIGIN_NAME,
-        /// <summary>NULL</summary>
-        NULL_7,
-        /// <summary>品名コード1</summary>
-        PRODUCT_NAME_CODE_1,
-        /// <summary>品名1</summary>
-        PRODUCT_NAME_1,
-        /// <summary>品名コード2</summary>
-        PRODUCT_NAME_CODE_2,
-        /// <summary>品名2</summary>
-        PRODUCT_NAME_2,
-        /// <summary>荷扱い1</summary>
-        FREIGHT_HANDLING_1,
-        /// <summary>荷扱い2</summary>
-        FREIGHT_HANDLING_2,
-        /// <summary>記事</summary>
-        ARTICLE,
+        /// <summary>発送元住所3</summary>
+        ORIGIN_ADDRESS_3,
+        /// <summary>発送元名称1</summary>
+        ORIGIN_NAME_1,
+        /// <summary>発送元名称2</summary>
+        ORIGIN_NAME_2,
+        /// <summary>発送元敬称</summary>
+        ORIGIN_TITLE,
+        /// <summary>発送元電話番号</summary>
+        ORIGIN_TEL,
+        /// <summary>発送元メール</summary>
+        ORIGIN_MAIL,
+        /// <summary>こわれもの</summary>
+        BREAKABLE_FLG,
+        /// <summary>逆さま厳禁</summary>
+        WAY_UP_FLG,
+        /// <summary>下積み厳禁</summary>
+        DO_NOT_STACK_FLG,
+        /// <summary>厚さ</summary>
+        THICKNESS,
+        /// <summary>お届け日</summary>
+        DELIBERY_DATE,
+        /// <summary>お届け時間</summary>
+        DELIBERY_TIME,
+        /// <summary>発行枚数</summary>
+        POST_NUM,
+        /// <summary>フリー項目</summary>
+        FREE_ITEM,
         /// <summary>代引金額</summary>
         COD_PAY,
         /// <summary>代引消費税</summary>
         COD_TAX,
-        /// <summary>NULL</summary>
-        NULL_8,
-        /// <summary>NULL</summary>
-        NULL_9,
-        /// <summary>発行枚数</summary>
-        POST_NUM,
-        /// <summary>個数口枠の印字</summary>
-        NUMBER_FRAME,
-        /// <summary>ご請求先顧客コード</summary>
-        BILLING_CODE,
-        /// <summary>NULL</summary>
-        NULL_10,
-        /// <summary>運賃管理番号</summary>
-        FARE_NO,
+        /// <summary>商品名</summary>
+        PRODUCT_NAME,
 
         MAX
     }
