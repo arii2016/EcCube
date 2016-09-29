@@ -144,6 +144,8 @@ namespace EcCube
         COD_TAX,
         /// <summary>商品名</summary>
         PRODUCT_NAME,
+        /// <summary>商品備考</summary>
+        PRODUCT_RENARKS,
 
         MAX
     }
@@ -294,6 +296,8 @@ namespace EcCube
         public EnumInvoiceClass enInvoiceClass;
         /// <summary>合計箱数</summary>
         public int iTotalBoxNum;
+        /// <summary>箱サイズリスト</summary>
+        public List<string> listBoxSize = new List<string>();
 
 
 
@@ -306,6 +310,7 @@ namespace EcCube
             listProductCode = new List<string>();
             listQuantity = new List<int>();
             listProductName = new List<string>();
+            listBoxSize = new List<string>();
             Init();
         }
         /// <summary>
@@ -331,6 +336,7 @@ namespace EcCube
             listProductCode.Clear();
             listQuantity.Clear();
             listProductName.Clear();
+            listBoxSize.Clear();
             enInvoiceClass = EnumInvoiceClass.DELIVERY;
             iTotalBoxNum = 0;
         }

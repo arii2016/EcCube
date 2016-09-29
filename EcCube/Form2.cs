@@ -226,81 +226,103 @@ namespace EcCube
                     if (clsEcCubeData.listProductCode[i] == "mcn004")
                     {
                         clsEcCubeData.iTotalBoxNum += (3 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("080");
+                        clsEcCubeData.listBoxSize.Add("080");
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn006")
                     {
                         clsEcCubeData.iTotalBoxNum += (2 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("080");
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn001")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn002")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("140");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn005")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn007")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn014")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn015")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn019")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("160");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn016")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("140");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn018")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn017")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "cfd002")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "cfd003")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "cfd004")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "cfd008")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "cfd011")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "cfd012")
                     {
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn003")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("060");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn020")
                     {
+                    }
+                    else if (clsEcCubeData.listProductCode[i] == "mcn021")
+                    {
+                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
+                        clsEcCubeData.listBoxSize.Add("140");
                     }
                     else
                     {
@@ -311,10 +333,12 @@ namespace EcCube
                 if (bSmallBoxFlag == true)
                 {
                     clsEcCubeData.iTotalBoxNum++;
+                    clsEcCubeData.listBoxSize.Add("060");
                 }
                 if (clsEcCubeData.iTotalBoxNum == 0)
                 {
                     clsEcCubeData.iTotalBoxNum = 1;
+                    clsEcCubeData.listBoxSize.Add("060");
                 }
 
                 // 送り状種別設定
@@ -606,7 +630,7 @@ namespace EcCube
                     strYpprData[(int)EnumYpprItem.DELIBERY_TIME] = "00";
                 }
                 // 発行枚数
-                strYpprData[(int)EnumYpprItem.POST_NUM] = m_listOrderData[i].iTotalBoxNum.ToString();
+                strYpprData[(int)EnumYpprItem.POST_NUM] = "1";
                 // フリー項目
                 strYpprData[(int)EnumYpprItem.FREE_ITEM] = "3" + m_listOrderData[i].strOrderId;
                 // 代引金額
@@ -640,34 +664,44 @@ namespace EcCube
                     return false;
                 }
                 // 代引きで複数箱の場合はコレクトと発払いに分ける
-                if (m_listOrderData[i].strPaymentMethod == "代金引換" && m_listOrderData[i].iTotalBoxNum > 1)
+                if (m_listOrderData[i].strPaymentMethod == "代金引換")
                 {
                     // コレクト
-                    strYpprData[(int)EnumYpprItem.POST_NUM] = "1";
+                    strYpprData[(int)EnumYpprItem.THICKNESS] = m_listOrderData[i].listBoxSize[0];
+                    strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = m_listOrderData[i].listBoxSize[0];
                     for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
                     {
                         clsSw.Write("{0},", strYpprData[j]);
                     }
                     clsSw.Write("\n");
 
-                    // 発払い                
-                    strYpprData[(int)EnumYpprItem.POST_NUM] = (m_listOrderData[i].iTotalBoxNum - 1).ToString();
-                    strYpprData[(int)EnumYpprItem.COD_PAY] = "";
-                    strYpprData[(int)EnumYpprItem.PAYMENT_SOURCE] = "0";
-                    strYpprData[(int)EnumYpprItem.INVOICE_CLASS] = "1100783001";
-                    for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
+                    // 発払い
+                    for (int j = 1; j < m_listOrderData[i].iTotalBoxNum; j++)
                     {
-                        clsSw.Write("{0},", strYpprData[j]);
+                        strYpprData[(int)EnumYpprItem.THICKNESS] = m_listOrderData[i].listBoxSize[j];
+                        strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = m_listOrderData[i].listBoxSize[j];
+                        strYpprData[(int)EnumYpprItem.COD_PAY] = "";
+                        strYpprData[(int)EnumYpprItem.PAYMENT_SOURCE] = "0";
+                        strYpprData[(int)EnumYpprItem.INVOICE_CLASS] = "1100783001";
+                        for (int k = 0; k < (int)EnumYpprItem.MAX; k++)
+                        {
+                            clsSw.Write("{0},", strYpprData[k]);
+                        }
+                        clsSw.Write("\n");
                     }
-                    clsSw.Write("\n");
                 }
                 else
                 {
-                    for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
+                    for (int j = 0; j < m_listOrderData[i].iTotalBoxNum; j++)
                     {
-                        clsSw.Write("{0},", strYpprData[j]);
+                        strYpprData[(int)EnumYpprItem.THICKNESS] = m_listOrderData[i].listBoxSize[j];
+                        strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = m_listOrderData[i].listBoxSize[j];
+                        for (int k = 0; k < (int)EnumYpprItem.MAX; k++)
+                        {
+                            clsSw.Write("{0},", strYpprData[k]);
+                        }
+                        clsSw.Write("\n");
                     }
-                    clsSw.Write("\n");
                 }
 
                 clsSw.Flush();
