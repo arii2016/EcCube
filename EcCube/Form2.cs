@@ -645,15 +645,10 @@ namespace EcCube
                 // 代引消費税
                 strYpprData[(int)EnumYpprItem.COD_TAX] = "";
                 // 商品名設定
-                strYpprData[(int)EnumYpprItem.PRODUCT_NAME] = m_listOrderData[i].listProductName[0];
-                if (strYpprData[(int)EnumYpprItem.PRODUCT_NAME].Length > 25)
-                {
-                    strYpprData[(int)EnumYpprItem.PRODUCT_NAME] = strYpprData[(int)EnumYpprItem.PRODUCT_NAME].Substring(0, 25);
-                }
+                strYpprData[(int)EnumYpprItem.PRODUCT_NAME] = "電子部品";
 
 
                 // CSVへ書き込む
-
                 StreamWriter clsSw;
                 try
                 {
