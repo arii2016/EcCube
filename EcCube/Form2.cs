@@ -43,8 +43,6 @@ namespace EcCube
         List<CEcCubeData> m_listOrderData = new List<CEcCubeData>();
         // ゆうプリR出力ファイル名
         string m_YpprFileName;
-        // Openlogi出力ファイル名
-        string m_OpenlogiFileName;
 
         /// <summary>グリッド列の幅</summary>
         int[] m_iGridColWidth = new int[(int)EnumShowItem.MAX];
@@ -83,7 +81,6 @@ namespace EcCube
 
             // ゆうプリRファイル名
             m_YpprFileName = Path.GetDirectoryName(strFileName) + "\\" + "ゆうプリR.csv";
-            m_OpenlogiFileName = Path.GetDirectoryName(strFileName) + "\\" + "OpenLogi.csv";
 
             m_ListProductFileName = Path.GetDirectoryName(strFileName) + "\\" + "今日の出荷.csv";
 
@@ -225,104 +222,38 @@ namespace EcCube
                 {
                     if (clsEcCubeData.listProductCode[i] == "mcn004")
                     {
-                        clsEcCubeData.iTotalBoxNum += (3 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("080");
-                        clsEcCubeData.listBoxSize.Add("080");
-                        clsEcCubeData.listBoxSize.Add("100");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn006")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (2 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("080");
-                        clsEcCubeData.listBoxSize.Add("100");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn001")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("100");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn002")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("140");
+                        // CO2本体
+                        clsEcCubeData.iTotalBoxNum += (4 * clsEcCubeData.listQuantity[i]);
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn005")
                     {
+                        // 水冷
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("100");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn007")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn014")
                     {
+                        // 1.6W Mini
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("100");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn015")
                     {
+                        // 3.5W Mini
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("100");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn019")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("160");
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn016")
                     {
+                        // 安全カバー
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("140");
                     }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn018")
+                    else if (clsEcCubeData.listProductCode[i] == "mcn019")
                     {
+                        // 拡張フレームセット
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn017")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "cfd002")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "cfd003")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "cfd004")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "cfd008")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "cfd011")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "cfd012")
-                    {
-                        clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("060");
-                    }
-                    else if (clsEcCubeData.listProductCode[i] == "mcn020")
-                    {
                     }
                     else if (clsEcCubeData.listProductCode[i] == "mcn021")
                     {
+                        // FABOOL Laser Mini用排気ファンキット
                         clsEcCubeData.iTotalBoxNum += (1 * clsEcCubeData.listQuantity[i]);
-                        clsEcCubeData.listBoxSize.Add("140");
                     }
                     else
                     {
@@ -333,12 +264,10 @@ namespace EcCube
                 if (bSmallBoxFlag == true)
                 {
                     clsEcCubeData.iTotalBoxNum++;
-                    clsEcCubeData.listBoxSize.Add("060");
                 }
                 if (clsEcCubeData.iTotalBoxNum == 0)
                 {
                     clsEcCubeData.iTotalBoxNum = 1;
-                    clsEcCubeData.listBoxSize.Add("060");
                 }
 
                 // 送り状種別設定
@@ -475,11 +404,6 @@ namespace EcCube
         {
             // 宅急便・代引き
             if (ConvertDelivery() == false)
-            {
-                return true;
-            }
-            // オープンロジ
-            if (ConvertOpenlogi() == false)
             {
                 return true;
             }
@@ -646,6 +570,8 @@ namespace EcCube
                 strYpprData[(int)EnumYpprItem.COD_TAX] = "";
                 // 商品名設定
                 strYpprData[(int)EnumYpprItem.PRODUCT_NAME] = "電子部品";
+                // 商品備考
+                strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = "";
 
 
                 // CSVへ書き込む
@@ -662,8 +588,6 @@ namespace EcCube
                 if (m_listOrderData[i].strPaymentMethod == "代金引換")
                 {
                     // コレクト
-                    strYpprData[(int)EnumYpprItem.THICKNESS] = m_listOrderData[i].listBoxSize[0];
-                    strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = m_listOrderData[i].listBoxSize[0];
                     for (int j = 0; j < (int)EnumYpprItem.MAX; j++)
                     {
                         clsSw.Write("{0},", strYpprData[j]);
@@ -673,8 +597,6 @@ namespace EcCube
                     // 発払い
                     for (int j = 1; j < m_listOrderData[i].iTotalBoxNum; j++)
                     {
-                        strYpprData[(int)EnumYpprItem.THICKNESS] = m_listOrderData[i].listBoxSize[j];
-                        strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = m_listOrderData[i].listBoxSize[j];
                         strYpprData[(int)EnumYpprItem.COD_PAY] = "";
                         strYpprData[(int)EnumYpprItem.PAYMENT_SOURCE] = "0";
                         strYpprData[(int)EnumYpprItem.INVOICE_CLASS] = "1100783001";
@@ -689,8 +611,6 @@ namespace EcCube
                 {
                     for (int j = 0; j < m_listOrderData[i].iTotalBoxNum; j++)
                     {
-                        strYpprData[(int)EnumYpprItem.THICKNESS] = m_listOrderData[i].listBoxSize[j];
-                        strYpprData[(int)EnumYpprItem.PRODUCT_RENARKS] = m_listOrderData[i].listBoxSize[j];
                         for (int k = 0; k < (int)EnumYpprItem.MAX; k++)
                         {
                             clsSw.Write("{0},", strYpprData[k]);
@@ -701,145 +621,6 @@ namespace EcCube
 
                 clsSw.Flush();
                 clsSw.Close();
-            }
-
-            return true;
-        }
-        //--------------------------------------------------------------
-        public bool ConvertOpenlogi()
-        {
-            for (int i = 0; i < m_listOrderData.Count; i++)
-            {
-                if (m_listOrderData[i].bEnable == false)
-                {
-                    continue;
-                }
-
-                for (int j = 0; j < m_listOrderData[i].listProductCode.Count; j++)
-                {
-                    if (m_listOrderData[i].listProductCode[j] != "mcn004")
-                    {
-                        continue;
-                    }
-
-                    // OpenLogiデーター
-                    string[] strOpenlogiData = new string[(int)EnumOpenLogiItem.MAX];
-
-                    // 注文番号
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORDER_ID] = "3" + m_listOrderData[i].strOrderId;
-                    // 出庫依頼数
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORDER_NUM] = m_listOrderData[i].listQuantity[j].ToString();
-                    // お届け先郵便番号
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_POST_NO] = m_listOrderData[i].strPostNo;
-                    // お届け先住所1
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_ADDRESS_1] = m_listOrderData[i].strAddress1;
-                    // お届け先住所2
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_ADDRESS_2] = m_listOrderData[i].strAddress2 + m_listOrderData[i].strAddress3;
-                    // お届け先住所3
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_ADDRESS_3] = "";
-                    // お届け先名
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_NAME] = m_listOrderData[i].strName;
-                    // お届け先会社・部門名
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_COMPANY] = m_listOrderData[i].strCompanyName;
-                    // お届け先電話番号
-                    strOpenlogiData[(int)EnumOpenLogiItem.TRANSPORT_TEL] = m_listOrderData[i].strPhoneNo;
-                    // 割れ物注意
-                    strOpenlogiData[(int)EnumOpenLogiItem.FRAGILE] = "1";
-
-                    // ご依頼主郵便番号
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_POST_NO] = "4000306";
-                    // ご依頼主住所1
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_ADDRESS_1] = "山梨県";
-                    // ご依頼主住所2
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_ADDRESS_2] = "南アルプス市小笠原1589-1";
-                    // ご依頼主住所3
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_ADDRESS_3] = "";
-                    // ご依頼主名
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_NAME] = "有井";
-                    // ご依頼主会社・部門名
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_COMPANY] = "株式会社smartDIYs";
-                    // ご依頼主電話番号
-                    strOpenlogiData[(int)EnumOpenLogiItem.ORIGIN_TEL] = "050-3786-7989";
-
-
-                    // CSVへ書き込む
-                    bool bHeaderFlg = false;
-
-                    // ファイルが存在しない場合には、ヘッダーを追加
-                    if (System.IO.File.Exists(m_OpenlogiFileName) == false)
-                    {
-                        bHeaderFlg = true;
-                    }
-
-                    StreamWriter clsSw;
-                    try
-                    {
-                        clsSw = new StreamWriter(m_OpenlogiFileName, true, Encoding.GetEncoding("Shift_JIS"));
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                    // ヘッダー書き込み
-                    if (bHeaderFlg)
-                    {
-                        clsSw.Write("ID,商品名,商品コード,サイズ,在庫数,出庫依頼数,出庫予約,単価,合計金額,小計,配送料,手数料,割引額,総計,配送先郵便番号,配送先都道府県,配送先住所,配送先マンション・ビル名,配送先氏名,配送先会社名,配送先電話番号,配送先連絡メール,配送先マスタ登録,注文番号,配送便指定,配送会社指定,希望時間帯,お届け希望日,ギフトラッピング単位,ラッピングタイプ,贈り主氏名,同梱指定,不在時宅配ボックス,到着前電話確認,割れ物注意,代引き指定,明細注意書き,ご依頼主郵便番号,ご依頼主都道府県,ご依頼主住所,ご依頼主マンション・ビル名,ご依頼主氏名,ご依頼主会社名,ご依頼主部署名,ご依頼主電話番号\n");
-                    }
-
-                    // 板金
-                    // 商品管理コード
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_ID] = "43";
-                    // 商品名
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_NAME] = "Smart Laser CO2 Cover(co2-160311-100)";
-                    // 商品コード
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_CODE] = "7";
-                    for (int k = 0; k < (int)EnumOpenLogiItem.MAX; k++)
-                    {
-                        clsSw.Write("{0}", strOpenlogiData[k]);
-                        if (k != (int)EnumOpenLogiItem.MAX - 1)
-                        {
-                            clsSw.Write(",");
-                        }
-                    }
-                    clsSw.Write("\n");
-
-                    // アクリル
-                    // 商品管理コード
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_ID] = "44";
-                    // 商品名
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_NAME] = "Smart Laser CO2 Acrylic(co2-160311-100)";
-                    // 商品コード
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_CODE] = "8";
-                    for (int k = 0; k < (int)EnumOpenLogiItem.MAX; k++)
-                    {
-                        clsSw.Write("{0}", strOpenlogiData[k]);
-                        if (k != (int)EnumOpenLogiItem.MAX - 1)
-                        {
-                            clsSw.Write(",");
-                        }
-                    }
-                    clsSw.Write("\n");
-
-                    // アルミフレーム
-                    // 商品管理コード
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_ID] = "42";
-                    // 商品名
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_NAME] = "Smart Laser CO2 Aluminum Extrusion(co2-160311-100)";
-                    // 商品コード
-                    strOpenlogiData[(int)EnumOpenLogiItem.PRODUCT_CODE] = "6";
-                    for (int k = 0; k < (int)EnumOpenLogiItem.MAX; k++)
-                    {
-                        clsSw.Write("{0}", strOpenlogiData[k]);
-                        if (k != (int)EnumOpenLogiItem.MAX - 1)
-                        {
-                            clsSw.Write(",");
-                        }
-                    }
-                    clsSw.Write("\n");
-
-                    clsSw.Flush();
-                    clsSw.Close();
-                }
             }
 
             return true;

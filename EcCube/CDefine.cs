@@ -149,104 +149,6 @@ namespace EcCube
 
         MAX
     }
-    /// <summary>
-    /// OpenLogi要素
-    /// </summary>
-    public enum EnumOpenLogiItem
-    {
-        /// <summary>商品管理コード</summary>
-        PRODUCT_ID = 0,
-        /// <summary>商品名</summary>
-        PRODUCT_NAME,
-        /// <summary>商品コード</summary>
-        PRODUCT_CODE,
-        /// <summary>NULL</summary>
-        NULL_1,
-        /// <summary>NULL</summary>
-        NULL_2,
-        /// <summary>出庫依頼数</summary>
-        ORDER_NUM,
-        /// <summary>NULL</summary>
-        NULL_3,
-        /// <summary>NULL</summary>
-        NULL_4,
-        /// <summary>NULL</summary>
-        NULL_5,
-        /// <summary>NULL</summary>
-        NULL_6,
-        /// <summary>NULL</summary>
-        NULL_7,
-        /// <summary>NULL</summary>
-        NULL_8,
-        /// <9ummary>NULL</summary>
-        NULL_10,
-        /// <summary>NULL</summary>
-        NULL_11,
-        /// <summary>お届け先郵便番号</summary>
-        TRANSPORT_POST_NO,
-        /// <summary>お届け先住所1</summary>
-        TRANSPORT_ADDRESS_1,
-        /// <summary>お届け先住所2</summary>
-        TRANSPORT_ADDRESS_2,
-        /// <summary>お届け先住所3</summary>
-        TRANSPORT_ADDRESS_3,
-        /// <summary>お届け先名</summary>
-        TRANSPORT_NAME,
-        /// <summary>お届け先会社・部門名</summary>
-        TRANSPORT_COMPANY,
-        /// <summary>お届け先電話番号</summary>
-        TRANSPORT_TEL,
-        /// <summary>NULL</summary>
-        NULL_12,
-        /// <summary>NULL</summary>
-        NULL_13,
-        /// <summary>注文番号</summary>
-        ORDER_ID,
-        /// <summary>NULL</summary>
-        NULL_14,
-        /// <summary>NULL</summary>
-        NULL_15,
-        /// <summary>NULL</summary>
-        NULL_16,
-        /// <summary>NULL</summary>
-        NULL_17,
-        /// <summary>NULL</summary>
-        NULL_18,
-        /// <summary>NULL</summary>
-        NULL_19,
-        /// <summary>NULL</summary>
-        NULL_20,
-        /// <summary>NULL</summary>
-        NULL_21,
-        /// <summary>NULL</summary>
-        NULL_22,
-        /// <summary>NULL</summary>
-        NULL_23,
-        /// <summary>割れ物注意</summary>
-        FRAGILE,
-        /// <summary>NULL</summary>
-        NULL_24,
-        /// <summary>NULL</summary>
-        NULL_25,
-        /// <summary>ご依頼主郵便番号</summary>
-        ORIGIN_POST_NO,
-        /// <summary>ご依頼主住所1</summary>
-        ORIGIN_ADDRESS_1,
-        /// <summary>ご依頼主住所2</summary>
-        ORIGIN_ADDRESS_2,
-        /// <summary>ご依頼主住所3</summary>
-        ORIGIN_ADDRESS_3,
-        /// <summary>ご依頼主名</summary>
-        ORIGIN_NAME,
-        /// <summary>ご依頼主会社・部門名</summary>
-        ORIGIN_COMPANY,
-        /// <summary>NULL</summary>
-        NULL_26,
-        /// <summary>ご依頼主電話番号</summary>
-        ORIGIN_TEL,
-
-        MAX
-    }
     #endregion
     //--------------------------------------------------------------
     #region 構造体
@@ -296,10 +198,6 @@ namespace EcCube
         public EnumInvoiceClass enInvoiceClass;
         /// <summary>合計箱数</summary>
         public int iTotalBoxNum;
-        /// <summary>箱サイズリスト</summary>
-        public List<string> listBoxSize = new List<string>();
-
-
 
         //--------------------------------------------------------------
         /// <summary>
@@ -310,7 +208,6 @@ namespace EcCube
             listProductCode = new List<string>();
             listQuantity = new List<int>();
             listProductName = new List<string>();
-            listBoxSize = new List<string>();
             Init();
         }
         /// <summary>
@@ -336,7 +233,6 @@ namespace EcCube
             listProductCode.Clear();
             listQuantity.Clear();
             listProductName.Clear();
-            listBoxSize.Clear();
             enInvoiceClass = EnumInvoiceClass.DELIVERY;
             iTotalBoxNum = 0;
         }
@@ -351,8 +247,6 @@ namespace EcCube
         public string strProductName;
         /// <summary>合計数</summary>
         public int iTotalNum;
-
-
 
         //--------------------------------------------------------------
         /// <summary>
